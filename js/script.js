@@ -114,7 +114,7 @@ function toggleMode(){
         //header
         document.getElementsByTagName("header")[0].setAttribute('style','border-bottom: 1px solid #0a0a0a;')
         //change Button Mode text and icon
-        buttonDLMode.children[0].src = "../assets/sun-solid.svg"
+        buttonDLMode.children[0].src = "./assets/sun-solid.svg"
         buttonDLMode.children[1].innerHTML = "Light Mode"
 
         darkMode = !darkMode
@@ -131,7 +131,7 @@ function toggleMode(){
         //header
         document.getElementsByTagName("header")[0].setAttribute('style','border-bottom: 1px solid #e2e2e2;')
         //change Button Mode text and icon
-        buttonDLMode.children[0].src = "../assets/moon-solid.svg"
+        buttonDLMode.children[0].src = "./assets/moon-solid.svg"
         buttonDLMode.children[1].innerHTML = "Dark Mode"
 
         darkMode = !darkMode
