@@ -10,6 +10,7 @@ $BodyFont: 'Nunito Sans', sans-serif;
 $HFontSize: 14px;
 $DFontSize: 16px;
 
+
 body{
     padding: 0;
     margin: 0%;
@@ -301,3 +302,77 @@ body{
     }
         
 }
+
+@media (max-width: 800px) {
+
+    body{
+        .container-fluid{
+            height: 100%;
+            overflow: auto;
+            section{
+                .container-inputs{
+                    gap: 10px !important;
+                    .container-search{
+                        padding: 12px !important;
+                        .input-marco{
+                            width: 100% !important;
+                        }
+                    }
+                }
+            }
+            #sectionGlobal{
+                gap: 50px;
+            }
+
+            #sectionDetail{
+                display: flex;
+                
+                padding: 0 !important;
+                flex-direction: column-reverse;
+                .container-buttonBack{
+                    padding: 0;
+                    justify-content: center;
+                    #btnBack{
+                        margin: 0;
+                    }
+                }
+                .container-info{
+                    flex-direction: column;
+                    overflow: auto;
+                    gap: 20px;
+                    padding: 0;
+                    .container-flag{
+                        margin-top: 40px;
+                        img{
+                            width: 200px;
+                        }
+                    }
+                    .container-detail{
+                        flex-direction: column;
+                        padding: 0;
+                        gap: 30px;
+                        .container-title{
+                            h3{
+                                text-align: center;
+                            }
+                        }
+                        .container-2halfs{
+                            gap: 15px;
+                            align-items: center;
+                            justify-content: center;
+                            flex-direction: column;
+                            width: 100%;
+                            height: 90%;
+                            .container-half1, .container-half2{
+                                width: 100%;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
