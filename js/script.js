@@ -52,6 +52,7 @@ function createCard(image,title,population,region,capital) {
     cardBody.appendChild(containerTitle)
     cardBody.appendChild(containerDetail)
     cardBody.classList.add('cards')
+    cardBody.setAttribute('onclick','toggleToDetails(this)')
     if(darkMode){
         cardBody.classList.add('shadow-DM')
     }else{
@@ -93,7 +94,6 @@ function filterRegion(continents) {
 }
 
 function filterCountry(country){
-    console.log(country)
     if(country === ""){
         loadCards("all")
     }else{
@@ -116,6 +116,8 @@ function toggleMode(){
         //change Button Mode text and icon
         buttonDLMode.children[0].src = "./assets/sun-solid.svg"
         buttonDLMode.children[1].innerHTML = "Light Mode"
+        //btnBack
+        document.getElementById('btnBack').setAttribute('style','background: #202c37; color: #ffffff;box-shadow: 0 0 10px #0a0a0a;')
 
         darkMode = !darkMode
         loadCards("all")
@@ -133,10 +135,67 @@ function toggleMode(){
         //change Button Mode text and icon
         buttonDLMode.children[0].src = "./assets/moon-solid.svg"
         buttonDLMode.children[1].innerHTML = "Dark Mode"
+        //btnBack
+        document.getElementById('btnBack').setAttribute('style','background: rgb(240,240,240);')
 
         darkMode = !darkMode
         loadCards("all")
     }
+}
+
+function toggleToHome() {
+    const sectionGlobal = document.getElementById('sectionGlobal')
+    const sectionDetail = document.getElementById('sectionDetail')
+    sectionGlobal.setAttribute('style','display: flex;')
+    sectionDetail.setAttribute('style','display: none;')
+}
+
+function toggleToDetails(card) {
+    changeDetailsInfo(card)
+
+}
+
+function changeDetailsInfo(card){
+    let imgFlag = document.getElementById('imgFlag')
+    let titleCountry = document.getElementById('titleCountry')
+    let nativeName = document.getElementById('nativeName')
+    let population = document.getElementById('population')
+    let region = document.getElementById('region')
+    let subRegion = document.getElementById('subRegion')
+    let capital = document.getElementById('capital')
+    let levelDomain = document.getElementById('levelDomain')
+    let currencies = document.getElementById('currencies')
+    let languages = document.getElementById('languages')
+    let borders = document.getElementById('borders')
+
+    fetch(`https://restcountries.com/v3.1/name/${card.children[1].children[0].innerHTML}`)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        imgFlag.src = data[0].flags.svg
+        titleCountry.innerHTML = data[0].name.common
+        nativeName.innerHTML = "<b>Native Name:</b> " + data[0].name.nativeName[Object.keys(data[0].name.nativeName)[0]].official
+        population.innerHTML = "<b>Population:</b> " + data[0].population
+        region.innerHTML = "<b>Region:</b> " + data[0].region
+        subRegion.innerHTML = "<b>Sub Region:</b> " + data[0].subregion
+        capital.innerHTML = "<b>Capital:</b> " + data[0].capital[0]
+        levelDomain.innerHTML = "<b>Top Level Domain</b> " + data[0].tld[0]
+
+        for (let i = 0; i < Object.keys(data[0].languages).length; i++) {
+            (i === 0) ? languages.innerHTML = "<b>Languages: </b> " + data[0].languages[Object.keys(data[0].languages)[i]] : languages.innerHTML += ", " + data[0].languages[Object.keys(data[0].languages)[i]];
+            
+        }
+
+        for (let i = 0; i < Object.keys(data[0].currencies).length; i++) {
+            (i === 0) ? currencies.innerHTML =  "<b>Currencies:</b> " + data[0].currencies[Object.keys(data[0].currencies)][Object.keys(data[0].currencies[Object.keys(data[0].currencies)])[0]] : currencies.innerHTML += ", " + data[0].currencies[Object.keys(data[0].currencies)][Object.keys(data[0].currencies[Object.keys(data[0].currencies)])[0]]
+        }
+        
+    });
+
+    const sectionGlobal = document.getElementById('sectionGlobal')
+    const sectionDetail = document.getElementById('sectionDetail')
+    sectionGlobal.setAttribute('style','display: none;')
+    sectionDetail.setAttribute('style','display: flex;')
 }
 
 const filterInput = document.getElementById('filterRegion')
@@ -148,3 +207,9 @@ searchBar.addEventListener("change", () => filterCountry(searchBar.value))
 const buttonDLMode = document.getElementById('buttonDLMode')
 let darkMode = false;
 buttonDLMode.addEventListener("click", () => toggleMode())
+
+const btnBack = document.getElementById('btnBack')
+btnBack.addEventListener('click', () => {
+    toggleToHome()
+})
+
