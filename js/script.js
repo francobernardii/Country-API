@@ -4,53 +4,10 @@ window.onload = () => {
 
 function createCard(image,title,population,region,capital) {
     let cardBody = document.createElement('div')
-    //create containers divs to group the info
-    let containerImage = document.createElement('div')
-    containerImage.setAttribute('style',`background: url("${image}") center no-repeat;background-size: cover;`)
-    let containerTitle = document.createElement('div')
-    let containerDetail = document.createElement('div')
-    //create h1 tag where we put the country's name
-    let h1 = document.createElement('h1')
-    let contentT = document.createTextNode(title)
-    h1.appendChild(contentT)
-    //create h3 tags to put in the detail section of the card
-    let detail1 = document.createElement('h3')
-    let detail2 = document.createElement('h3')
-    let detail3 = document.createElement('h3')
-    let contentD1 = document.createTextNode('Population: ')
-    let contentD2 = document.createTextNode('Region: ')
-    let contentD3 = document.createTextNode('Capital: ')
-    detail1.appendChild(contentD1)
-    detail2.appendChild(contentD2)
-    detail3.appendChild(contentD3)
-    //create span tags where we load the info of each country
-    let span1 = document.createElement('span')
-    let span2 = document.createElement('span')
-    let span3 = document.createElement('span')
-    let contentS1 = document.createTextNode(population)
-    let contentS2 = document.createTextNode(region)
-    let contentS3 = document.createTextNode(capital)
-    span1.appendChild(contentS1)
-    span2.appendChild(contentS2)
-    span3.appendChild(contentS3)
-    //put everything together to build the full card
-    //Container Detail
-    detail1.appendChild(span1)
-    detail2.appendChild(span2)
-    detail3.appendChild(span3)
-    containerDetail.appendChild(detail1)
-    containerDetail.appendChild(detail2)
-    containerDetail.appendChild(detail3)
-    containerDetail.classList.add('container-detail')
-    //container-title
-    containerTitle.appendChild(h1)
-    containerTitle.classList.add('container-title')
-    //container-image
-    containerImage.classList.add('container-image')
-    //card
-    cardBody.appendChild(containerImage)
-    cardBody.appendChild(containerTitle)
-    cardBody.appendChild(containerDetail)
+
+    cardBody.appendChild(createContainerImage(image))
+    cardBody.appendChild(createContainerTitle(title))
+    cardBody.appendChild(createContainerDetails(population,region,capital))
     cardBody.classList.add('cards')
     cardBody.setAttribute('onclick','toggleToDetails(this)')
     if(darkMode){
@@ -58,8 +15,56 @@ function createCard(image,title,population,region,capital) {
     }else{
         cardBody.classList.remove('shadow-DM')
     }
-
     return cardBody
+}
+
+function createContainerImage(image) {
+    let containerImage = document.createElement('div')
+    containerImage.setAttribute('style',`background: url("${image}") center no-repeat;background-size: cover;`)
+    containerImage.classList.add('container-image')
+    return containerImage
+}
+
+function createContainerTitle(title) {
+    let containerTitle = document.createElement('div')
+    let h1 = document.createElement('h1')
+    let contentT = document.createTextNode(title)
+
+    h1.appendChild(contentT)
+    containerTitle.appendChild(h1)
+    containerTitle.classList.add('container-title')
+    return containerTitle
+}
+
+function createContainerDetails(population,region,capital) {
+    let containerDetail = document.createElement('div')
+    let detail1 = document.createElement('h3')
+    let detail2 = document.createElement('h3')
+    let detail3 = document.createElement('h3')
+    let span1 = document.createElement('span')
+    let span2 = document.createElement('span')
+    let span3 = document.createElement('span')
+    let contentD1 = document.createTextNode('Population: ')
+    let contentD2 = document.createTextNode('Region: ')
+    let contentD3 = document.createTextNode('Capital: ')
+    let contentS1 = document.createTextNode(population)
+    let contentS2 = document.createTextNode(region)
+    let contentS3 = document.createTextNode(capital)
+    detail1.appendChild(contentD1)
+    detail2.appendChild(contentD2)
+    detail3.appendChild(contentD3)
+    span1.appendChild(contentS1)
+    span2.appendChild(contentS2)
+    span3.appendChild(contentS3)
+    detail1.appendChild(span1)
+    detail2.appendChild(span2)
+    detail3.appendChild(span3)
+    containerDetail.appendChild(detail1)
+    containerDetail.appendChild(detail2)
+    containerDetail.appendChild(detail3)
+    containerDetail.classList.add('container-detail')
+
+    return containerDetail
 }
 
 function loadCards(link) {
@@ -198,6 +203,11 @@ function changeDetailsInfo(card){
     sectionDetail.setAttribute('style','display: flex;')
 }
 
+const btnBack = document.getElementById('btnBack')
+btnBack.addEventListener('click', () => {
+    toggleToHome()
+})
+
 const filterInput = document.getElementById('filterRegion')
 filterInput.addEventListener("change",() => filterRegion(filterInput))
 
@@ -207,9 +217,4 @@ searchBar.addEventListener("change", () => filterCountry(searchBar.value))
 const buttonDLMode = document.getElementById('buttonDLMode')
 let darkMode = false;
 buttonDLMode.addEventListener("click", () => toggleMode())
-
-const btnBack = document.getElementById('btnBack')
-btnBack.addEventListener('click', () => {
-    toggleToHome()
-})
 
